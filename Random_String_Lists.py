@@ -1,5 +1,5 @@
 """
- Date: Apr 16, 2020
+ Date: Apr 17, 2020
  Author: Olga Lazarenko
  Project Name: Random String Lists
  Description: two lists with randomly selected string values will be created, 
