@@ -3,12 +3,13 @@ Project Name: Read Text File, Change Military Time to Standard Time,
 			  Write to a New Text File
 Date: May 07, 2020
 Author: Olga Lazarenko
+Description: the program will read csv file and convet the columns with dates expressed in military time to standard time:
+			 the hours will be converted to standard time, PM/AM will be added
+			 
 '''
 
 import os
 import csv
-
-
 
 print("File exists:  " + str(os.path.exists('E://_Python_Projects/fhv_tripdata_2019-11-small_part_ONLY.csv')))
 #check if the file exsists
