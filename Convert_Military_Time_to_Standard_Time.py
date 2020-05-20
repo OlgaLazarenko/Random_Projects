@@ -1,3 +1,5 @@
+
+
 '''
 Project Name: Read Text File, Change Military Time to Standard Time,
 			  Write to a New Text File
@@ -11,11 +13,11 @@ Description: the program will read csv file and convet the columns with dates ex
 import os
 import csv
 
-print("File exists:  " + str(os.path.exists('E://_Python_Projects/fhv_tripdata_2019-11-small_part_ONLY.csv')))
+print("File exists:  " + str(os.path.exists('E://_Python_Projects/GitHub_Random_Projects/Data_Files/NYC_TripData_2019_11_Sample.csv')))
 #check if the file exsists
 
 print()
-os.stat('E://_Python_Projects/fhv_tripdata_2019-11-small_part_ONLY.csv') 
+os.stat('E://_Python_Projects/GitHub_Random_Projects/Data_Files/NYC_TripData_2019_11_Sample.csv') 
 # if the file doesn't exists, show the problem 
 print('------------')
 print()
@@ -35,9 +37,9 @@ print()
 
 
 
-with open('E://_Python_Projects/fhv_tripdata_2019-11-small_part_ONLY_2.csv','rt') as file:
+with open('E://_Python_Projects/GitHub_Random_Projects/Data_Files/NYC_TripData_2019_11_Sample.csv','rt') as file:
 
-	with open('E://_Python_Projects/fhv_tripdata_2019-11-small_part_NEW.csv','w') as new_file:
+	with open('E://_Python_Projects/GitHub_Random_Projects/Data_Files/NYC_TripData_2019_11_Output.csv','w') as new_file:
 		print()
 		header=file.readline()
 		new_file.write(header)
@@ -92,12 +94,12 @@ with open('E://_Python_Projects/fhv_tripdata_2019-11-small_part_ONLY_2.csv','rt'
 			
 			new_file.write(new_str) #write new string to a file
 			
-with open('E://_Python_Projects/fhv_tripdata_2019-11-small_part_ONLY_2.csv','rt') as file: # read the initial file
+with open('E://_Python_Projects/GitHub_Random_Projects/Data_Files/NYC_TripData_2019_11_Sample.csv','rt') as file: # read the initial file
 	text=file.read()
 	print(text,end='')
 	
 print()
-with open('E://_Python_Projects/fhv_tripdata_2019-11-small_part_NEW.csv','rt') as new_file:
+with open('E://_Python_Projects/GitHub_Random_Projects/Data_Files/NYC_TripData_2019_11_Output.csv','r') as new_file: # read the output data
 	new_text=new_file.read()
 	print(new_text,end='')
 	
