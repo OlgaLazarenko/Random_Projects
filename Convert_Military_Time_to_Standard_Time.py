@@ -8,6 +8,8 @@ author: Olga Lazarenko
 Description: the program will read csv file and convet the columns with dates expressed in military time to standard time:
 			 the hours will be converted to standard time, PM/aM will be added
 			 
+Data Source: https://data.cityofnewyork.us/Transportation/2019-High-Volume-FHV-Trip-Records/4p5c-cbgn/data
+			a sample of data was used to check if the code performes properly
 '''
 
 import os
