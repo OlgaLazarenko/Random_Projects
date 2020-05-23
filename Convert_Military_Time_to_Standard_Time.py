@@ -87,14 +87,14 @@ with open('E://_Python_Projects/GitHub_Random_Projects/Data_Files/NYC_TripData_2
 			new_a,new_b = create_new_time(new_hour_a,new_hour_b) # call the funtion 'create_new_time'
 			
 			
+			def delet_insert_time(line_list): # the function will delete the 'old' time string and insert the 'new' time with AM/PM
+				del line_list[1:3] # delete form the list 'old' pickup_time and dropoff_time
 			
-			del line_list[1:3] # delete form the list 'old' pickup_time and dropoff_time
+				line_list.insert(1,new_a) #insert into the list
+				line_list.insert(2,new_b) #insert into the list
+				return line_list
 			
-			line_list.insert(1,new_a) #insert into the list
-			line_list.insert(2,new_b) #insert into the list
-			
-			
-			
+			line_list=delet_insert_time(line_list) # call the function
 			new_str=','.join(line_list)
 			#print(new_str,end='')
 			
