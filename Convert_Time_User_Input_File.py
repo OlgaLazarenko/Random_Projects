@@ -18,6 +18,9 @@ print()
 print("the data file is: NYC_TripData_2019_11_Sample")
 print()
 data_file=input("Enter the data file name here: ")
+print()
+print("the output file name: NYC_TripData_User_Output.csv")
+data_output=input("Enter the data file for the output: ")
 data_file_dir= 'E://_Python_Projects/GitHub_Random_Projects/Data_Files/'
 data_file_path=data_file_dir+data_file+'.csv'
 print(data_file_path)
@@ -43,12 +46,9 @@ print()
 		# print(str(i) + ' - ' + line, end=' ')
 print()
 
-
-
-
 with open(data_file_path,'rt') as file:
 
-	with open(data_file_dir+'NYC_TripData_2019_11_Output.csv','w') as new_file:
+	with open(data_file_dir+data_output,'w') as new_file:
 		print()
 		header=file.readline()
 		new_file.write(header)
@@ -112,7 +112,7 @@ with open(data_file_path,'rt') as file: # read the initial file
 	print(text,end='')
 	
 print()
-with open(data_file_dir+'NYC_TripData_2019_11_Output.csv','r')as new_file: # read the output data
+with open(data_file_dir+data_output,'r')as new_file: # read the output data
 	new_text=new_file.read()
 	print(new_text,end='')
 	
