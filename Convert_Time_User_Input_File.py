@@ -14,7 +14,9 @@ Data Source: https://data.cityofnewyork.us/Transportation/2019-High-Volume-FHV-T
 
 import os
 import csv
-
+print()
+print("the data file is: NYC_TripData_2019_11_Sample")
+print()
 data_file=input("Enter the data file name here: ")
 data_file_dir= 'E://_Python_Projects/GitHub_Random_Projects/Data_Files/'
 data_file_path=data_file_dir+data_file+'.csv'
@@ -39,13 +41,9 @@ print()
 	# for line in file:
 		# i += 1
 		# print(str(i) + ' - ' + line, end=' ')
-print('the data file is: NYC_TripData_2019_11_Sample')
 print()
-data_file_name:('Enter the data file name here: ')
 
-folder_name='Data_Files/NYC_TripData_2019_11_Sample'
-data_file_dir='E://_Python_Projects/GitHub_Random_Projects/'
-data_file_path=data_file_dir+data_file_name
+
 
 
 with open(data_file_path,'rt') as file:
