@@ -15,12 +15,15 @@ Data Source: https://data.cityofnewyork.us/Transportation/2019-High-Volume-FHV-T
 import os
 import csv
 
-print("File exists:  " + str(os.path.exists('E://_Python_Projects/GitHub_Random_Projects/Data_Files/NYC_TripData_2019_11_Sample.csv')))
-#check if the file exsists
+data_file=input("Enter the data file name here: ")
+data_file_dir= 'E://_Python_Projects/GitHub_Random_Projects/Data_Files/'
+data_file_path=data_file_dir+data_file+'.csv'
+print(data_file_path)
+print()
+print("File exists:  " + str(os.path.exists(data_file_path))) #check if the file exsists
 
 print()
-os.stat('E://_Python_Projects/GitHub_Random_Projects/Data_Files/NYC_TripData_2019_11_Sample.csv') 
-# if the file doesn't exists, show the problem 
+os.stat(data_file_path)  # if the file doesn't exists, show the problem 
 print('------------')
 print()
 
@@ -36,12 +39,18 @@ print()
 	# for line in file:
 		# i += 1
 		# print(str(i) + ' - ' + line, end=' ')
+print('the data file is: NYC_TripData_2019_11_Sample')
+print()
+data_file_name:('Enter the data file name here: ')
+
+folder_name='Data_Files/NYC_TripData_2019_11_Sample'
+data_file_dir='E://_Python_Projects/GitHub_Random_Projects/'
+data_file_path=data_file_dir+data_file_name
 
 
+with open(data_file_path,'rt') as file:
 
-with open('E://_Python_Projects/GitHub_Random_Projects/Data_Files/NYC_TripData_2019_11_Sample.csv','rt') as file:
-
-	with open('E://_Python_Projects/GitHub_Random_Projects/Data_Files/NYC_TripData_2019_11_Output.csv','w') as new_file:
+	with open(data_file_dir+'NYC_TripData_2019_11_Output.csv','w') as new_file:
 		print()
 		header=file.readline()
 		new_file.write(header)
@@ -100,12 +109,12 @@ with open('E://_Python_Projects/GitHub_Random_Projects/Data_Files/NYC_TripData_2
 			
 			new_file.write(new_str) #write new string to a file
 			
-with open('E://_Python_Projects/GitHub_Random_Projects/Data_Files/NYC_TripData_2019_11_Sample.csv','rt') as file: # read the initial file
+with open(data_file_path,'rt') as file: # read the initial file
 	text=file.read()
 	print(text,end='')
 	
 print()
-with open('E://_Python_Projects/GitHub_Random_Projects/Data_Files/NYC_TripData_2019_11_Output.csv','r') as new_file: # read the output data
+with open(data_file_dir+'NYC_TripData_2019_11_Output.csv','r')as new_file: # read the output data
 	new_text=new_file.read()
 	print(new_text,end='')
 	
