@@ -6,44 +6,34 @@ Project Name: Read Text File, Change Military Time to Standard Time,
 Date: May 07, 2020
 author: Olga Lazarenko
 Description: the program will read csv file and convet the columns with dates expressed in military time to standard time:
-			 the hours will be converted to standard time, PM/aM will be added
+			 the hours will be converted to standard time, PM/aM will be added;
+			 the user will enter the name of the data file and the name of the output file;
 			 
 Data Source: https://data.cityofnewyork.us/Transportation/2019-High-Volume-FHV-Trip-Records/4p5c-cbgn/data
-			a sample of data was used to check if the code performes properly
+			a sample of the data was used to check if the code performes properly
 '''
 
 import os
 import csv
+
 print()
 print("the data file is: NYC_TripData_2019_11_Sample")
 print()
 data_file=input("Enter the data file name here: ")
 print()
+
 print("the output file name: NYC_TripData_User_Output.csv")
 data_output=input("Enter the data file for the output: ")
 data_file_dir= 'E://_Python_Projects/GitHub_Random_Projects/Data_Files/'
 data_file_path=data_file_dir+data_file+'.csv'
-print(data_file_path)
+
 print()
 print("File exists:  " + str(os.path.exists(data_file_path))) #check if the file exsists
 
 print()
 os.stat(data_file_path)  # if the file doesn't exists, show the problem 
 print('------------')
-print()
 
-
-		# while True:
-			# line=file.readline()
-			# line_list=line.split(',')
-			
-			# if not line:
-				# break
-		# print()
-	# i = 0
-	# for line in file:
-		# i += 1
-		# print(str(i) + ' - ' + line, end=' ')
 print()
 
 with open(data_file_path,'rt') as file:
