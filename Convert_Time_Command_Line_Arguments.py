@@ -3,10 +3,11 @@
 '''
 Project Name: Read Text File, Change Military Time to Standard Time,
 			  Write to a New Text File
-Date: May 07, 2020
+Date: june 6 2020
 author: Olga Lazarenko
 Description: the program will read csv file and convet the columns with dates expressed in military time to standard time:
-			 the hours will be converted to standard time, PM/aM will be added
+			 the hours will be converted to standard time, PM/aM will be added:
+       the user passes the input file and the output file as the command line arguments
 			 
 Data Source: https://data.cityofnewyork.us/Transportation/2019-High-Volume-FHV-Trip-Records/4p5c-cbgn/data
 			a sample of data was used to check if the code performes properly
@@ -14,11 +15,19 @@ Data Source: https://data.cityofnewyork.us/Transportation/2019-High-Volume-FHV-T
 
 import os
 import csv
+import sys
 
-print("File exists:  " + str(os.path.exists("C:\\OLGA_PROJECTS\\Python_Projects\\Random_Projects\\Data_Files\\NYC_TripData_2019_11_Sample.csv")))
+# the input file: C:\\OLGA_PROJECTS\\Python_Projects\\Random_Projects\\Data_Files\\NYC_TripData_2019_11_Sample.csv
+# the output file: C:\\OLGA_PROJECTS\\Python_Projects\\Random_Projects\\Data_Files\\NYC_TripData_2019_11_Output.csv
+
+
+input_file=sys.argv[1]
+output_file=sys.argv[2]
+
+print("File exists:  " + str(os.path.exists(input_file)))
 
 print()
-os.stat('C:\\OLGA_PROJECTS\\Python_Projects\\Random_Projects\\Data_Files\\NYC_TripData_2019_11_Sample.csv') 
+os.stat(input_file) 
 # if the file doesn't exists, show the problem 
 print('------------')
 print()
@@ -38,9 +47,9 @@ print()
 
 
 
-with open('C:\\OLGA_PROJECTS\\Python_Projects\\Random_Projects\\Data_Files\\NYC_TripData_2019_11_Sample.csv','rt') as file:
+with open(input_file,'rt') as file:
 
-	with open('C:\\OLGA_PROJECTS\\Python_Projects\\Random_Projects\\Data_Files\\NYC_TripData_2019_11_Output.csv','w') as new_file:
+	with open(output_file,'w') as new_file:
 		print()
 		header=file.readline()
 		new_file.write(header)
@@ -83,7 +92,7 @@ with open('C:\\OLGA_PROJECTS\\Python_Projects\\Random_Projects\\Data_Files\\NYC_
 				new_b= b[0:(b.find(' ')+1)] + new_hour_b 
 				return(new_a,new_b)
 			
-			new_a,new_b = create_new_time(new_hour_a,new_hour_b) # call the funtion 'create_new_time'
+			new_a,new_b = create_new_time(new_hour_a,new_hour_b) # call the function 'create_new_time'
 			
 			
 			def delete_insert_time(line_list): # the function will delete the 'old' time string and insert the 'new' time with AM/PM
@@ -99,12 +108,12 @@ with open('C:\\OLGA_PROJECTS\\Python_Projects\\Random_Projects\\Data_Files\\NYC_
 			
 			new_file.write(new_str) #write new string to a file
 			
-with open('C:\\OLGA_PROJECTS\\Python_Projects\\Random_Projects\\Data_Files\\NYC_TripData_2019_11_Sample.csv','rt') as file: # read the initial file
+with open(input_file,'rt') as file: # read the initial file
 	text=file.read()
 	print(text,end='')
 	
 print()
-with open('C:\\OLGA_PROJECTS\\Python_Projects\\Random_Projects\\Data_Files\\NYC_TripData_2019_11_Output.csv','r') as new_file: # read the output data
+with open(output_file,'r') as new_file: # read the output data
 	new_text=new_file.read()
 	print(new_text,end='')
 	

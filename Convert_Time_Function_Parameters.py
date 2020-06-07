@@ -16,19 +16,23 @@ Data Source: https://data.cityofnewyork.us/Transportation/2019-High-Volume-FHV-T
 import os
 import csv
 
-print("File exists:  " + str(os.path.exists('E://_Python_Projects/GitHub_Random_Projects/Data_Files/NYC_TripData_2019_11_Sample.csv')))
+data_folder='C:\\OLGA_PROJECTS\\Python_Projects\\Random_Projects\\Data_Files_Customer\\'
+
+input_file=data_folder + 'NYC_TripData_2019_11_Sample.csv'
+output_file=data_folder + 'NYC_TripData_Parameters_Output.csv'
+
+print("The data file exists:  " + str(os.path.exists(input_file)))
 #check if the file exsists
 
 print()
-os.stat('E://_Python_Projects/GitHub_Random_Projects/Data_Files/NYC_TripData_2019_11_Sample.csv') 
+os.stat(input_file) 
 # if the file doesn't exists, show the problem 
 print('------------')
 print()
 
-input_file='E://_Python_Projects/GitHub_Random_Projects/Data_Files/NYC_TripData_2019_11_Sample.csv'
-output_file='E://_Python_Projects/GitHub_Random_Projects/Data_Files/NYC_TripData_Parameters_Output.csv'
 
-def convert_time_military_to_standard(input_file, output_file): #create the function and pass the parameters 
+
+def convert_time_military_to_standard(input_file, output_file): #create the function and pass the input data file and the file for the output as the parameters 
 
 	with open(input_file,'rt') as file:
 
