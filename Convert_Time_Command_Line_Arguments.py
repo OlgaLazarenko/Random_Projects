@@ -17,12 +17,12 @@ import os
 import csv
 import sys
 
-# the input file: C:\\OLGA_PROJECTS\\Python_Projects\\Random_Projects\\Data_Files\\NYC_TripData_2019_11_Sample.csv
-# the output file: C:\\OLGA_PROJECTS\\Python_Projects\\Random_Projects\\Data_Files\\NYC_TripData_2019_11_Output.csv
+'''the input file: C:\OLGA_PROJECTS\Python_Projects\Random_Projects\Data_Files\NYC_TripData_2019_11_Sample.csv
+the output file: C:\\OLGA_PROJECTS\\Python_Projects\\Random_Projects\\Data_Files\\NYC_TripData_2019_11_Output.csv '''
 
 
-input_file=sys.argv[1]
-output_file=sys.argv[2]
+input_file=sys.argv[1] # the input file argument
+output_file=sys.argv[2] # the output file argument
 
 print("File exists:  " + str(os.path.exists(input_file)))
 
