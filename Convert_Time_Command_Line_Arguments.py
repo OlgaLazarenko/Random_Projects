@@ -3,11 +3,11 @@
 '''
 Project Name: Read Text File, Change Military Time to Standard Time,
 			  Write to a New Text File
-Date: May 07, 2020
+Date: June 6, 2020
 author: Olga Lazarenko
 Description: the program will read csv file and convet the columns with dates expressed in military time to standard time:
 			 the hours will be converted to standard time, PM/aM will be added;
-			 command line arguments will be passed by the user to run the code
+			 command line arguments (the input file, the output file) will be passed by the user to run the code
 			 
 Data Source: https://data.cityofnewyork.us/Transportation/2019-High-Volume-FHV-Trip-Records/4p5c-cbgn/data
 			a sample of data was used to check if the code performes properly
@@ -15,10 +15,10 @@ Data Source: https://data.cityofnewyork.us/Transportation/2019-High-Volume-FHV-T
 
 import os
 import csv
-import sys
+import sys 
 
-input_file=sys.argv[1]
-output_file=sys.argv[2]
+input_file=sys.argv[1] #the argument/the input file passed by the user at the command line
+output_file=sys.argv[2] #the output file passed as the third argument at the commmand line by the user 
 
 
 print("File exists:  " + str(os.path.exists(input_file)))
