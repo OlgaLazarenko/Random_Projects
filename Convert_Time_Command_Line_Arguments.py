@@ -19,7 +19,7 @@ import sys
 
 input_file=sys.argv[1] #the argument/the input file passed by the user at the command line
 output_file=sys.argv[2] #the output file passed as the third argument at the commmand line by the user 
-
+# E://_Python_Projects/GitHub_Random_Projects/Data_Files/NYC_TripData.csv
 
 print("File exists:  " + str(os.path.exists(input_file)))
 #check if the file exsists
@@ -105,13 +105,13 @@ with open(input_file,'rt') as file:
 			#print(new_str,end='')
 			
 			new_file.write(new_str) #write new string to a file
-			
-with open(input_file,'rt') as file: # read the initial file
-	text=file.read()
-	print(text,end='')
+
+# with open(input_file,'rt') as file: # read the initial file
+	# text=file.read()
+	# print(text,end='')
 	
-print()
-with open(output_file,'r') as new_file: # read the output data
-	new_text=new_file.read()
-	print(new_text,end='')
+# print()
+# with open(output_file,'r') as new_file: # read the output data
+	# new_text=new_file.read()
+	# print(new_text,end='')
 	
