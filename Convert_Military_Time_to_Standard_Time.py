@@ -15,11 +15,10 @@ Data Source: https://data.cityofnewyork.us/Transportation/2019-High-Volume-FHV-T
 import os
 import csv
 
-print("File exists:  " + str(os.path.exists('E://_Python_Projects/GitHub_Random_Projects/Data_Files/NYC_TripData_2019_11_Sample.csv')))
-#check if the file exsists
+print("File exists:  " + str(os.path.exists("C:\\OLGA_PROJECTS\\Python_Projects\\Random_Projects\\Data_Files\\NYC_TripData_2019_11_Sample.csv")))
 
 print()
-os.stat('E://_Python_Projects/GitHub_Random_Projects/Data_Files/NYC_TripData_2019_11_Sample.csv') 
+os.stat('C:\\OLGA_PROJECTS\\Python_Projects\\Random_Projects\\Data_Files\\NYC_TripData_2019_11_Sample.csv') 
 # if the file doesn't exists, show the problem 
 print('------------')
 print()
@@ -39,9 +38,9 @@ print()
 
 
 
-with open('E://_Python_Projects/GitHub_Random_Projects/Data_Files/NYC_TripData_2019_11_Sample.csv','rt') as file:
+with open('C:\\OLGA_PROJECTS\\Python_Projects\\Random_Projects\\Data_Files\\NYC_TripData_2019_11_Sample.csv','rt') as file:
 
-	with open('E://_Python_Projects/GitHub_Random_Projects/Data_Files/NYC_TripData_2019_11_Output.csv','w') as new_file:
+	with open('C:\\OLGA_PROJECTS\\Python_Projects\\Random_Projects\\Data_Files\\NYC_TripData_2019_11_Output.csv','w') as new_file:
 		print()
 		header=file.readline()
 		new_file.write(header)
@@ -100,12 +99,12 @@ with open('E://_Python_Projects/GitHub_Random_Projects/Data_Files/NYC_TripData_2
 			
 			new_file.write(new_str) #write new string to a file
 			
-with open('E://_Python_Projects/GitHub_Random_Projects/Data_Files/NYC_TripData_2019_11_Sample.csv','rt') as file: # read the initial file
+with open('C:\\OLGA_PROJECTS\\Python_Projects\\Random_Projects\\Data_Files\\NYC_TripData_2019_11_Sample.csv','rt') as file: # read the initial file
 	text=file.read()
 	print(text,end='')
 	
 print()
-with open('E://_Python_Projects/GitHub_Random_Projects/Data_Files/NYC_TripData_2019_11_Output.csv','r') as new_file: # read the output data
+with open('C:\\OLGA_PROJECTS\\Python_Projects\\Random_Projects\\Data_Files\\NYC_TripData_2019_11_Output.csv','r') as new_file: # read the output data
 	new_text=new_file.read()
 	print(new_text,end='')
 	
