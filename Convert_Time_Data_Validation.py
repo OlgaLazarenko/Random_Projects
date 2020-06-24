@@ -7,7 +7,8 @@ Date: June 22, 2020
 author: Olga Lazarenko
 Description: the program will read csv file and convert the columns with dates expressed in military time to standard time:
 			 the hours will be converted to standard time, PM/AM will be added;
-			 the validation of the data will be done, the rows with errors will be removed and saved at a special file 
+			 the validation of the data will be done, the rows with errors will be removed and saved at a special file;
+			command line arguments (the input file, the output file,the errors file) will be passed by the user to run the code			 
 			 	
 Specification: 1)dispatching_base_num: the values should be in the form 'B00123', the first character should be a letter and the following five
 				characters should be numbers;
@@ -24,27 +25,32 @@ Data Source: https://data.cityofnewyork.us/Transportation/2019-High-Volume-FHV-T
 import os
 import csv
 import datetime # use the module to check the datetime format
+import sys
+
+input_file=sys.argv[1] #the argument/the input file passed by the user at the command line
+output_file=sys.argv[2] #the output file passed as the third argument at the commmand line 
+errors_file=sys.argv[3] # the errors file passed as the forth argument at the command line 
 
 print()
-print("File exists:  " + str(os.path.exists('E://_Python_Projects/GitHub_Random_Projects/Data_Files/TripData_2.csv')))
+print("File exists:  " + str(os.path.exists(input_file)))
 #check if the file exsists
 
 print()
-os.stat('E://_Python_Projects//GitHub_Random_Projects/Data_Files/TripData_2.csv') 
+os.stat(input_file) 
 # if the file doesn't exists, show the problem 
 
 print()
 
 
-with open('E://_Python_Projects/GitHub_Random_Projects/Data_Files/TripData_2.csv','rt') as file: #open the initial file to read from it
+with open(input_file,'rt') as file1: #open the initial file to read from it
 
-	with open('E://_Python_Projects/GitHub_Random_Projects/Data_Files/TripData_2_Output.csv','w') as new_file: #create a file for the output and write to it
+	with open(output_file,'w') as file2: #create a file for the output and write to it
 		
-		with open('E://_Python_Projects/GitHub_Random_Projects/Data_Files/TripData_2_Errors.csv','w') as errors_file: #create a file for rows with errors
+		with open(errors_file,'w') as file3: #create a file for rows with errors
 
 			header=file.readline() #read the first row containing the columns name
-			new_file.write(header) #write to the output file the columns name 
-			errors_file.write(header) #write to the errors file the comlumns name
+			file2.write(header) #write to the output file the columns name 
+			file3.write(header) #write to the errors file the comlumns name
 		
 		
 			for line in file: #iterate over rows of the file
@@ -61,23 +67,23 @@ with open('E://_Python_Projects/GitHub_Random_Projects/Data_Files/TripData_2.csv
 			
 				#validate the first element in the list, the base ID
 				if len(base)!=6 or base[0]!='B' or str.isdecimal(base[1:])=="False":
-					errors_file.write(line) # move the row to the error file
+					file3.write(line) # move the row to the error file
 					continue #if an errow is present,skip the rest of the code in the loop and take another row to validate
 					
 				try:
 					datetime.datetime.strptime(line_list[1], format_time)
 				except:
-					errors_file.write(line) # if the datetime format is incorrect, write the row to the errors file
+					file3.write(line) # if the datetime format is incorrect, write the row to the errors file
 					continue
 				
 				try:
 					datetime.datetime.strptime(line_list[2],format_time)
 				except:	
-					errors_file.write(line) #move the row to the error file
+					file3.write(line) #move the row to the error file
 					continue
 					
 				if len(line_list[3])!=3  or str.isdecimal(line_list[3])=="False": 
-					errors_file.write(line)
+					file3.write(line)
 					continue
 					
 					
@@ -119,6 +125,10 @@ with open('E://_Python_Projects/GitHub_Random_Projects/Data_Files/TripData_2.csv
 				new_a,new_b = create_new_time(new_hour_a,new_hour_b) # call the funtion 'create_new_time'
 			
 			
+	
+
+
+
 				def delete_insert_time(line_list): # the function will delete the 'old' time string and insert the 'new' time with AM/PM
 					del line_list[1:3] # delete form the list 'old' pickup_time and dropoff_time
 				
@@ -128,34 +138,34 @@ with open('E://_Python_Projects/GitHub_Random_Projects/Data_Files/TripData_2.csv
 			
 				line_list=delete_insert_time(line_list) # call the function
 				new_str=','.join(line_list)
-				#print(new_str,end='')
-			
-				new_file.write(new_str)
+				file2.write(new_str) #write to the output_file
 
 print('The initial data (sample):')
 print()				
-with open('E://_Python_Projects/GitHub_Random_Projects/Data_Files/TripData_2.csv','rt') as file: # read the initial file
+with open(input_file,'rt') as file1: # read the initial file
 	for i in range(1,11):# print the first ten rows
-		text=file.readline()
+		text=file1.readline()
 		print(text,end='')
 print('-------------------------------------------')
 
 print()
 print()
 print('The output data (sample) with standard time format:')
-print()
-with open('E://_Python_Projects/GitHub_Random_Projects/Data_Files/TripData_2_Output.csv','r') as new_file:  # read some rows from the output file with validated values                  
+print('---')
+print(output_file)
+print('---')
+with open(output_file,'rt') as file2:
 	for i in range(1,11):
-		new_text=new_file.readline() #read the first ten rows
-		print(new_text,end='')	
+		text=file2.readline() #read the first ten rows
+		print(text,end='')	
 print('-------------------------------------------')
 print()	
 print('The errors file (sample):')
 print()
-with open('E://_Python_Projects/GitHub_Random_Projects/Data_Files/TripData_2_Errors.csv','r') as errors_file: # read some rows from the file stored the rows with errors
+with open(errors_file,'rt') as file3: # read some rows from the file stored the rows with errors
 	for i in range(1,11):
-		errors=errors_file.readline() #read the first ten rows
-		print(errors, end='')
+		text=file3.readline() #read the first ten rows
+		print(text, end='')
 print('------------------------------------------')
 
 
