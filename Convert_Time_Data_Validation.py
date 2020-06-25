@@ -25,19 +25,19 @@ Data Source: https://data.cityofnewyork.us/Transportation/2019-High-Volume-FHV-T
 import os
 import csv
 import datetime # use the module to check the datetime format
-import sys
+import sys # the module will allow the user to supply the command line arguments 
 
 input_file=sys.argv[1] #the argument/the input file passed by the user at the command line
-output_file=sys.argv[2] #the output file passed as the third argument at the commmand line 
+output_file=sys.argv[2] #the output file passed as the third argument at the command line 
 errors_file=sys.argv[3] # the errors file passed as the forth argument at the command line 
 
 print()
 print("File exists:  " + str(os.path.exists(input_file)))
-#check if the file exsists
+#check if the input file exsists
 
 print()
 os.stat(input_file) 
-# if the file doesn't exists, show the problem 
+# if the input file doesn't exists, show the problem 
 
 print()
 
@@ -48,12 +48,12 @@ with open(input_file,'rt') as file1: #open the initial file to read from it
 		
 		with open(errors_file,'w') as file3: #create a file for rows with errors
 
-			header=file.readline() #read the first row containing the columns name
-			file2.write(header) #write to the output file the columns name 
-			file3.write(header) #write to the errors file the comlumns name
+			header=file1.readline() #read the first row containing the columns name
+			file2.write(header) #write the columns name to the output file 
+			file3.write(header) #write  the comlumns names to the errors file
 		
 		
-			for line in file: #iterate over rows of the file
+			for line in file1: #iterate over rows of the file
 			
 				format_time ="%d/%m/%Y %H:%M" # the pickup and the dropoff time should be in this format
 
@@ -117,25 +117,21 @@ with open(input_file,'rt') as file1: #open the initial file to read from it
 				
 				new_hour_a, new_hour_b=convert_to_stand_time(hour_a, hour_b) # call the function 'convert_to_stand_time'
 														
-				def create_new_time(new_hour_a, new_hour_b): # create new time string for pickup and dropoff 											# pass two arguments( hour_a, hour_b) to the function
+				def create_new_time(new_hour_a, new_hour_b): # the function will create new time strings for pickup and dropoff 											# pass two arguments( hour_a, hour_b) to the function
 					new_a= a[0:(a.find(' ')+1)] + new_hour_a 
 					new_b= b[0:(b.find(' ')+1)] + new_hour_b 
 					return(new_a,new_b)
-			
+					
 				new_a,new_b = create_new_time(new_hour_a,new_hour_b) # call the funtion 'create_new_time'
 			
 			
-	
-
-
 
 				def delete_insert_time(line_list): # the function will delete the 'old' time string and insert the 'new' time with AM/PM
-					del line_list[1:3] # delete form the list 'old' pickup_time and dropoff_time
-				
+					del line_list[1:3] # delete from the list 'old' pickup_time and dropoff_time
 					line_list.insert(1,new_a) #insert into the list
 					line_list.insert(2,new_b) #insert into the list
 					return line_list
-			
+					
 				line_list=delete_insert_time(line_list) # call the function
 				new_str=','.join(line_list)
 				file2.write(new_str) #write to the output_file
@@ -151,8 +147,6 @@ print('-------------------------------------------')
 print()
 print()
 print('The output data (sample) with standard time format:')
-print('---')
-print(output_file)
 print('---')
 with open(output_file,'rt') as file2:
 	for i in range(1,11):
