@@ -87,38 +87,46 @@ for input_file in data_files:
 					format_time ="%d/%m/%Y %H:%M" # the pickup and the dropoff time should be in this format
 
 					line_list=line.split(',') #split the line/row into a list by the comma separators
-				
-					base=line_list[0] #the first item in the list, 
-					a=line_list[1] #pickup_time,the second item in the list
-					b=line_list[2] #dropoff time,the third element in the list
-					location=line_list[3] #locationID, the forth element in the list
-				
-			
+					
+					license=line_list[0]
+					base=line_list[1] #the first item in the list, 
+					a=line_list[2] #pickup_time,the second item in the list
+					b=line_list[3] #dropoff time,the third element in the list
+					PUlocation=line_list[4] #locationID, the forth element in the list
+					DOlocation=line_list[5]
+					
+					if len(license)!=6 or license[0:2]!='HV' or str.isdecimal(license[2:])=="False":
+						file3.write(line) # move the row to the error file
+						continue #if an errow is present,skip the rest of the code in the loop and take another row to validate
+						
 					#validate the first element in the list, the base ID
 					if len(base)!=6 or base[0]!='B' or str.isdecimal(base[1:])=="False":
 						file3.write(line) # move the row to the error file
 						continue #if an errow is present,skip the rest of the code in the loop and take another row to validate
 					
 					try:
-						datetime.datetime.strptime(line_list[1], format_time)
+						datetime.datetime.strptime(line_list[2], format_time)
 					except:
 						file3.write(line) # if the datetime format is incorrect, write the row to the errors file
 						continue
 				
 					try:
-						datetime.datetime.strptime(line_list[2],format_time)
+						datetime.datetime.strptime(line_list[3],format_time)
 					except:	
 						file3.write(line) #move the row to the error file
 						continue
 						
-					if len(line_list[3])!=3  or str.isdecimal(line_list[3])=="False": 
+					if len(line_list[4])!=3  or str.isdecimal(line_list[4])=="False": 
 						file3.write(line)
 						continue
 					
+					if len(line_list[5])!=3  or str.isdecimal(line_list[5])=="False": 
+						file3.write(line)
+						continue
 					
 				
-					a_part1=line_list[1][0:(line_list[1].find(' ')+1)] # month-day-year part for the pickup datetime values 
-					b_part1=line_list[2][0:(line_list[2].find(' ')+1)] #month-day-year part for the dropoff datetime values
+					a_part1=line_list[2][0:(line_list[2].find(' ')+1)] # month-day-year part for the pickup datetime values 
+					b_part1=line_list[3][0:(line_list[3].find(' ')+1)] #month-day-year part for the dropoff datetime values
 				
 					hour_a=int(a[-5:-3])
 					hour_b=int(b[-5:-3])
@@ -156,9 +164,9 @@ for input_file in data_files:
 			
 
 					def delete_insert_time(line_list): # the function will delete the 'old' time string and insert the 'new' time with AM/PM
-						del line_list[1:3] # delete from the list 'old' pickup_time and dropoff_time
-						line_list.insert(1,new_a) #insert into the list
-						line_list.insert(2,new_b) #insert into the list
+						del line_list[2:4] # delete from the list 'old' pickup_time and dropoff_time
+						line_list.insert(2,new_a) #insert into the list
+						line_list.insert(3,new_b) #insert into the list
 						return line_list
 					
 					line_list=delete_insert_time(line_list) # call the function
@@ -190,5 +198,9 @@ with open(errors_file,'rt') as file3: # read some rows from the file stored the 
 		text=file3.readline() #read the first ten rows
 		print(text, end='')
 print('------------------------------------------')
+
+
+
+
 
 
