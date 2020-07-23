@@ -16,6 +16,7 @@ Specification: 1)dispatching_base_num: the values should be in the form 'B00123'
 				3)dropoff_datetime: the values should be in the format "%d/%m/%Y %H:%M"
 				4)PULocation: the values should be three or less characters long, only positive decimals are allowed
 				5)DOLocation: the values shold be three or less characters long, only positive decimals are allowed
+				6)flag: the values can be either 1 or blank
 				
 
 Data Source: https://data.cityofnewyork.us/Transportation/2019-High-Volume-FHV-Trip-Records/4p5c-cbgn/data
@@ -32,10 +33,11 @@ data_folder=sys.argv[1] #the argument/the input file passed by the user at the c
 output_file=sys.argv[2] #the output file passed as the third argument at the command line 
 errors_file=sys.argv[3] # the errors file passed as the forth argument at the command line 
 
+				
 print()
 print("Folder exists: " + str(os.path.exists(data_folder)))
 #check if the input file exsists
-
+					
 print()
 os.stat(data_folder)
 # if the input folder doesn't exists, show the problem 
@@ -44,27 +46,23 @@ print()
 
 os.chdir(data_folder)
 all_Files=glob.glob('*.csv')
-print()
-print(type(all_Files))
-print()
+
 my_Files=[]
 for f in all_Files:
 	if len(f)==14 and f[0:8] =="TripData":
-		print(f)
 		my_Files.append(f)
 
 		
 print()
-print(my_Files)
+print(my_Files) #show what files in the folder 
 print()
-
 
 data_files=[]
 a=0
 while a in range(len(my_Files)):
 	data_files.append(data_folder + '\\'+ my_Files[a])
 	a+=1
-print(data_files)
+print(data_files)#show the full names of the files in the folder 
 print()
 
 num_loop=1
@@ -94,39 +92,66 @@ for input_file in data_files:
 					b=line_list[3] #dropoff time,the third element in the list
 					PUlocation=line_list[4] #locationID, the forth element in the list
 					DOlocation=line_list[5]
+					flag=line_list[6]
 					
-					if len(license)!=6 or license[0:2]!='HV' or str.isdecimal(license[2:])=="False":
+					
+			
+					#validate the baseID
+					if len(license)!=6 or license[0:2]!="HV" or str.isdecimal(license[2:])=="False":
 						file3.write(line) # move the row to the error file
 						continue #if an errow is present,skip the rest of the code in the loop and take another row to validate
 						
-					#validate the first element in the list, the base ID
-					if len(base)!=6 or base[0]!='B' or str.isdecimal(base[1:])=="False":
+					#validate the secontd element in the list, the base ID
+					if len(base)!=6 or base[0]!= "B" or str.isdecimal(base[1:])=="False":
 						file3.write(line) # move the row to the error file
 						continue #if an errow is present,skip the rest of the code in the loop and take another row to validate
 					
-					try:
+					try: #validate the pickup date and time format
 						datetime.datetime.strptime(line_list[2], format_time)
 					except:
 						file3.write(line) # if the datetime format is incorrect, write the row to the errors file
 						continue
 				
-					try:
-						datetime.datetime.strptime(line_list[3],format_time)
+					try: #validate the dropoff  date and time format
+						datetime.datetime.strptime(line_list[3],format_time) 
 					except:	
 						file3.write(line) #move the row to the error file
 						continue
 						
-					if len(line_list[4])!=3  or str.isdecimal(line_list[4])=="False": 
+					 #validate the pickup locationID	
+					if  not PUlocation.isnumeric() :
+						file3.write(line)
+						continue
+					elif PUlocation.strip()=='':
+						file3.write(line)
+						continue
+					elif int(PUlocation)<=0:
+						file3.write(line)
+						continue
+					elif int(PUlocation)>=1000:
 						file3.write(line)
 						continue
 					
-					if len(line_list[5])!=3  or str.isdecimal(line_list[5])=="False": 
+					#validate the dropoff locationID
+					if not DOlocation.isnumeric(): 
 						file3.write(line)
 						continue
+					elif DOlocation.strip()=='':
+						file3.write(line)
+						continue
+					elif int(DOlocation)<=0:
+						file3.write(line)
+						continue
+					elif int(DOlocation)>=1000:
+						file3.write(line)
+						continue
+						
+					#validate the next column 
+					if flag.strip()!='1':
+						if flag.strip()!='':
+							file3.write(line)
+							continue
 					
-				
-					a_part1=line_list[2][0:(line_list[2].find(' ')+1)] # month-day-year part for the pickup datetime values 
-					b_part1=line_list[3][0:(line_list[3].find(' ')+1)] #month-day-year part for the dropoff datetime values
 				
 					hour_a=int(a[-5:-3])
 					hour_b=int(b[-5:-3])
@@ -183,7 +208,7 @@ print('-------------------------------------------')
 
 print()
 print()
-print('The output data (sample) with standard time format:')
+print('The output data (sample) with the standard time format:')
 print('---')
 with open(output_file,'rt') as file2:
 	for i in range(1,11):
