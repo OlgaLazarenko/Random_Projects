@@ -49,13 +49,8 @@ all_Files=glob.glob('*.csv')
 
 my_Files=[]
 for f in all_Files:
-<<<<<<< HEAD
-	if f[0:16] =="2019_High_Volume":
-		print(f)
-=======
-	if len(f)==14 and f[0:8] =="TripData":
->>>>>>> 7dcac0989a85fa5ea4a6e0ee465ff2d1354e8847
-		my_Files.append(f)
+  if f[0:8] =="TripData":
+    my_Files.append(f)
 
 		
 print()
