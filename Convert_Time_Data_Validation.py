@@ -16,7 +16,7 @@ Specification: 1)dispatching_base_num: the values should be in the form 'B00123'
 				3)dropoff_datetime: the values should be in the format "%d/%m/%Y %H:%M"
 				4)PULocation: the values should be three or less characters long, only positive decimals are allowed
 				5)DOLocation: the values shold be three or less characters long, only positive decimals are allowed
-				6)flag: the values can be either 1 or blank
+				6)flag: the values can be either 1 or blank;
 				
 
 Data Source: https://data.cityofnewyork.us/Transportation/2019-High-Volume-FHV-Trip-Records/4p5c-cbgn/data
