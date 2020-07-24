@@ -49,7 +49,7 @@ print(type(all_Files))
 print()
 my_Files=[]
 for f in all_Files:
-	if len(f)==14 and f[0:8] =="TripData":
+	if f[0:16] =="2019_High_Volume":
 		print(f)
 		my_Files.append(f)
 
