@@ -1,4 +1,5 @@
 
+#!/bin/python3
 
 '''
 Project Name: Read Text File, Change Military Time to Standard Time,
@@ -36,7 +37,7 @@ errors_file=sys.argv[3] # the errors file passed as the forth argument at the co
 				
 print()
 print("Folder exists: " + str(os.path.exists(data_folder)))
-#check if the input file exsists
+#check if the input file exists 
 					
 print()
 os.stat(data_folder)
@@ -51,6 +52,7 @@ my_Files=[]
 for f in all_Files:
   if f[0:8] =="TripData":
     my_Files.append(f)
+    print(my_Files)
 
 		
 print()
@@ -71,92 +73,98 @@ for input_file in data_files:
 	with open(input_file,'rt') as file1: #open the initial file to read from it
 
 		with open(output_file,'a+') as file2: #create a file for the output and write to it, the next data will be appended
-		
+     
 			with open(errors_file,'a+') as file3: #create a file for rows with errors, after reading each file, the errors will be appended
-
 				header=file1.readline() #read the first row containing the columns name
-				if num_loop==1: # the comlumns name should be written to the output and errors files only once 
+        
+				if num_loop==1: # the columns name should be written to the output and errors files only once 
 					file2.write(header) #write the columns name to the output file 
-					file3.write(header) #write  the comlumns names to the errors file
+					file3.write(header) #write  the columns names to the errors file
 				num_loop+=1
 		
 				for line in file1: #iterate over rows of the file
-			
-					format_time ="%d/%m/%Y %H:%M" # the pickup and the dropoff time should be in this format
-
+					format_time = '%m/%d/%Y %H:%M' # the pickup and the dropoff time should be in this format
+					my_time='05/01/2000 15:07'
+					try:
+						datetime.datetime.strptime(my_time,format_time)
+					except:
+						print("it is a wrong format  for my_time")
 					line_list=line.split(',') #split the line/row into a list by the comma separators
 					
-					license=line_list[0]
+					licenseID=line_list[0]
 					base=line_list[1] #the first item in the list, 
 					a=line_list[2] #pickup_time,the second item in the list
-					b=line_list[3] #dropoff time,the third element in the list
+					b=line_list[3] #drop-off time,the third element in the list
 					PUlocation=line_list[4] #locationID, the forth element in the list
 					DOlocation=line_list[5]
 					flag=line_list[6]
 					
 					
-			
-					#validate the baseID
-					if len(license)!=6 or license[0:2]!="HV" or str.isdecimal(license[2:])=="False":
+					#validate the baseID,
+					 #if an error is present,skip the rest of the code in the loop and take another row to validate
+					if len(licenseID)!=6 or licenseID[0:2]!="HV" or str.isnumeric(licenseID[2:])=="False":
+						file3.write(line)
+						continue
+               
+					#validate the second element in the list, the base ID
+					if len(base)!=6 or base[0]!= "B" or str.isnumeric(base[1:])=="False":
 						file3.write(line) # move the row to the error file
-						continue #if an errow is present,skip the rest of the code in the loop and take another row to validate
-						
-					#validate the secontd element in the list, the base ID
-					if len(base)!=6 or base[0]!= "B" or str.isdecimal(base[1:])=="False":
-						file3.write(line) # move the row to the error file
-						continue #if an errow is present,skip the rest of the code in the loop and take another row to validate
+						continue #if an error is present,skip the rest of the code in the loop and take another row to validate
 					
+
 					try: #validate the pickup date and time format
 						datetime.datetime.strptime(line_list[2], format_time)
 					except:
 						file3.write(line) # if the datetime format is incorrect, write the row to the errors file
 						continue
+					"""
 				
-					try: #validate the dropoff  date and time format
+					try: #validate the drop-off  date and time format
 						datetime.datetime.strptime(line_list[3],format_time) 
 					except:	
 						file3.write(line) #move the row to the error file
-						continue
+						continue """
 						
-					 #validate the pickup locationID	
-					if  not PUlocation.isnumeric() :
-						file3.write(line)
-						continue
-					elif PUlocation.strip()=='':
-						file3.write(line)
-						continue
-					elif int(PUlocation)<=0:
-						file3.write(line)
-						continue
-					elif int(PUlocation)>=1000:
-						file3.write(line)
-						continue
+ 				# validate the pickup locationID	
+				# 	if  not PUlocation.isnumeric() :
+				# 		file3.write(line)
+				# 		continue
+				# 	elif PUlocation.strip()=='':
+				# 		file3.write(line)
+				# 		continue
+				# 	elif int(PUlocation)<=0:
+				# 		file3.write(line)
+				# 		continue
+				# 	elif int(PUlocation)>=1000:
+				# 		file3.write(line)
+				# 		continue
 					
-					#validate the dropoff locationID
-					if not DOlocation.isnumeric(): 
-						file3.write(line)
-						continue
-					elif DOlocation.strip()=='':
-						file3.write(line)
-						continue
-					elif int(DOlocation)<=0:
-						file3.write(line)
-						continue
-					elif int(DOlocation)>=1000:
-						file3.write(line)
-						continue
+				# 	#validate the drop-off locationID
+				# 	if not DOlocation.isnumeric(): 
+				# 		file3.write(line)
+				# 		continue
+				# 	elif DOlocation.strip()=='':
+				# 		file3.write(line)
+				# 		continue
+				# 	elif int(DOlocation)<=0:
+				# 		file3.write(line)
+				# 		continue
+				# 	elif int(DOlocation)>=1000:
+				# 		file3.write(line)
+				# 		continue
 						
-					#validate the next column 
-					if flag.strip()!='1':
-						if flag.strip()!='':
-							file3.write(line)
-							continue
+				# 	#validate the next column 
+				# 	if flag.strip()!='1':
+				# 		if flag.strip()!='':
+				# 			file3.write(line)
+				# 			continue
 					
 				
 					hour_a=int(a[-5:-3])
 					hour_b=int(b[-5:-3])
 				
 			
+					
 					def convert_to_stand_time(hour_a,hour_b): # create a function with two parameters 
 						if hour_a>12:
 							new_hour_a=str(hour_a-12)+ a[-3:]+" PM"  # convert to standard time and add "AM/PM" to hours
@@ -176,47 +184,46 @@ for input_file in data_files:
 						elif hour_b==0:
 							new_hour_b='12'+ b[-3:] + "AM"
 						return(new_hour_a, new_hour_b)
-				
+			
 					new_hour_a, new_hour_b=convert_to_stand_time(hour_a, hour_b) # call the function 'convert_to_stand_time'
-														
+													
 					def create_new_time(new_hour_a, new_hour_b): # the function will create new time strings for pickup and dropoff 											# pass two arguments( hour_a, hour_b) to the function
 						new_a= a[0:(a.find(' ')+1)] + new_hour_a 
 						new_b= b[0:(b.find(' ')+1)] + new_hour_b 
 						return(new_a,new_b)
-					
+				
 					new_a,new_b = create_new_time(new_hour_a,new_hour_b) # call the funtion 'create_new_time'
-			
-			
+		
+		
 
 					def delete_insert_time(line_list): # the function will delete the 'old' time string and insert the 'new' time with AM/PM
 						del line_list[2:4] # delete from the list 'old' pickup_time and dropoff_time
 						line_list.insert(2,new_a) #insert into the list
 						line_list.insert(3,new_b) #insert into the list
 						return line_list
-					
+
 					line_list=delete_insert_time(line_list) # call the function
 					new_str=','.join(line_list)
 					file2.write(new_str) #write to the output_file
 
 print('The initial data (sample):')
 print()				
-with open(input_file,'rt') as file1: # read the initial file
+with open(data_files[0],'rt') as file1: # read the initial file
 	for i in range(1,11):# print the first ten rows
 		text=file1.readline()
 		print(text,end='')
+print()
 print('-------------------------------------------')
 
+print("My output file: {}".format(output_file))
 print()
-print()
-print('The output data (sample) with the standard time format:')
-print('---')
 with open(output_file,'rt') as file2:
 	for i in range(1,11):
 		text=file2.readline() #read the first ten rows
 		print(text,end='')	
 print('-------------------------------------------')
 print()	
-print('The errors file (sample):')
+print('The errors file (sample): {}'.format(errors_file))
 print()
 with open(errors_file,'rt') as file3: # read some rows from the file stored the rows with errors
 	for i in range(1,11):
