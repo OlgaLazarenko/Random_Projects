@@ -208,8 +208,8 @@ for input_file in data_files:
 
 print('The initial data (sample):')
 print()				
-with open(data_files[0],'rt') as file1: # read the initial file
-	for i in range(1,11):# print the first ten rows
+with open(data_files[1],'rt') as file1: # read the initial file
+	for i in range(0,11):# print the first ten rows
 		text=file1.readline()
 		print(text,end='')
 print()
@@ -218,7 +218,7 @@ print('-------------------------------------------')
 print("My output file: {}".format(output_file))
 print()
 with open(output_file,'rt') as file2:
-	for i in range(1,11):
+	for i in range(0,11):
 		text=file2.readline() #read the first ten rows
 		print(text,end='')	
 print('-------------------------------------------')
@@ -226,7 +226,7 @@ print()
 print('The errors file (sample): {}'.format(errors_file))
 print()
 with open(errors_file,'rt') as file3: # read some rows from the file stored the rows with errors
-	for i in range(1,11):
+	for i in range(0,11):
 		text=file3.readline() #read the first ten rows
 		print(text, end='')
 print('------------------------------------------')
