@@ -34,7 +34,6 @@ data_folder=sys.argv[1] #the argument/the input file passed by the user at the c
 output_file=sys.argv[2] #the output file passed as the third argument at the command line 
 errors_file=sys.argv[3] # the errors file passed as the forth argument at the command line 
 
-				
 print()
 print("Folder exists: " + str(os.path.exists(data_folder)))
 #check if the input file exists 
@@ -54,7 +53,9 @@ for f in all_Files:
     my_Files.append(f)
 
 print()
-print(my_Files) #show what files in the folder 
+print("The data files: ")  #show what files in the folder 
+for f in my_Files:
+	print(f)
 print()
 
 data_files=[]
@@ -62,8 +63,10 @@ a=0
 while a in range(len(my_Files)):
 	data_files.append(data_folder + '\\'+ my_Files[a])
 	a+=1
-print(data_files)#show the full names of the files in the folder 
-print()
+print("The full name of the files: ")#show the full names of the files in the folder 
+for f in data_files:
+	print(f)
+print('---------------------------------------------')
 
 num_loop=1
 
@@ -124,38 +127,38 @@ for input_file in data_files:
 						continue 
 						
  				# validate the pickup locationID	
-				# 	if  not PUlocation.isnumeric() :
-				# 		file3.write(line)
-				# 		continue
-				# 	elif PUlocation.strip()=='':
-				# 		file3.write(line)
-				# 		continue
-				# 	elif int(PUlocation)<=0:
-				# 		file3.write(line)
-				# 		continue
-				# 	elif int(PUlocation)>=1000:
-				# 		file3.write(line)
-				# 		continue
+					if  not PUlocation.isnumeric() :
+						file3.write(line)
+						continue
+					elif PUlocation.strip()=='':
+						file3.write(line)
+						continue
+					elif int(PUlocation)<=0:
+						file3.write(line)
+						continue
+					elif int(PUlocation)>=1000:
+						file3.write(line)
+						continue
 					
-				# 	#validate the drop-off locationID
-				# 	if not DOlocation.isnumeric(): 
-				# 		file3.write(line)
-				# 		continue
-				# 	elif DOlocation.strip()=='':
-				# 		file3.write(line)
-				# 		continue
-				# 	elif int(DOlocation)<=0:
-				# 		file3.write(line)
-				# 		continue
-				# 	elif int(DOlocation)>=1000:
-				# 		file3.write(line)
-				# 		continue
+					#validate the drop-off locationID
+					if not DOlocation.isnumeric(): 
+						file3.write(line)
+						continue
+					elif DOlocation.strip()=='':
+						file3.write(line)
+						continue
+					elif int(DOlocation)<=0:
+						file3.write(line)
+						continue
+					elif int(DOlocation)>=1000:
+						file3.write(line)
+						continue
 						
-				# 	#validate the next column 
-				# 	if flag.strip()!='1':
-				# 		if flag.strip()!='':
-				# 			file3.write(line)
-				# 			continue
+					#validate the next column 
+					if flag.strip()!='1':
+						if flag.strip()!='':
+							file3.write(line)
+							continue
 					
 				
 					hour_a=int(a[-5:-3])
