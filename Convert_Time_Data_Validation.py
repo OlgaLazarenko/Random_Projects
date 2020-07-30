@@ -9,7 +9,8 @@ author: Olga Lazarenko
 Description: the program will read csv file and convert the columns with dates expressed in military time to standard time:
 			 the hours will be converted to standard time, PM/AM will be added;
 			 the validation of the data will be done, the rows with errors will be removed and saved at a special file;
-			command line arguments (the input file, the output file,the errors file) will be passed by the user to run the code			 
+			command line arguments (the input file, the output file,the errors file) will be passed by the user to run the code;
+			count the rows at the initial data files, at the output file, at the errors file			 
 			 	
 Specification: 1)dispatching_base_num: the values should be in the form 'B00123', the first character should be a letter and the following five
 				characters should be numbers;
@@ -209,8 +210,8 @@ for input_file in data_files:
 
 print('The initial data (sample):')
 print()				
-with open(data_files[0],'rt') as file1: # read the initial file
-	for i in range(1,11):# print the first ten rows
+with open(data_files[1],'rt') as file1: # read the initial file
+	for i in range(0,11):# print the first ten rows
 		text=file1.readline()
 		print(text,end='')
 print()
@@ -219,7 +220,7 @@ print('-------------------------------------------')
 print("My output file: {}".format(output_file))
 print()
 with open(output_file,'rt') as file2:
-	for i in range(1,11):
+	for i in range(0,11):
 		text=file2.readline() #read the first ten rows
 		print(text,end='')	
 print('-------------------------------------------')
@@ -227,11 +228,10 @@ print()
 print('The errors file (sample): {}'.format(errors_file))
 print()
 with open(errors_file,'rt') as file3: # read some rows from the file stored the rows with errors
-	for i in range(1,11):
+	for i in range(0,11):
 		text=file3.readline() #read the first ten rows
 		print(text, end='')
 print('------------------------------------------')
-
 
 
 
