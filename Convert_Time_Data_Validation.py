@@ -52,9 +52,7 @@ my_Files=[]
 for f in all_Files:
   if f[0:8] =="TripData":
     my_Files.append(f)
-    print(my_Files)
 
-		
 print()
 print(my_Files) #show what files in the folder 
 print()
@@ -117,13 +115,13 @@ for input_file in data_files:
 					except:
 						file3.write(line) # if the datetime format is incorrect, write the row to the errors file
 						continue
-					"""
+					
 				
 					try: #validate the drop-off  date and time format
 						datetime.datetime.strptime(line_list[3],format_time) 
 					except:	
 						file3.write(line) #move the row to the error file
-						continue """
+						continue 
 						
  				# validate the pickup locationID	
 				# 	if  not PUlocation.isnumeric() :
