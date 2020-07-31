@@ -6,11 +6,14 @@ Project Name: Read Text File, Change Military Time to Standard Time,
 			  Write to a New Text File and Validate the Data 
 Date: June 22, 2020
 author: Olga Lazarenko
-Description: the program will read csv file and convert the columns with dates expressed in military time to standard time:
-			 the hours will be converted to standard time, PM/AM will be added;
-			 the validation of the data will be done, the rows with errors will be removed and saved at a special file;
-			command line arguments (the input file, the output file,the errors file) will be passed by the user to run the code;
-			count the rows at the initial data files, at the output file, at the errors file			 
+Description: the purpose of the program:
+			- read csv file and convert the columns with dates expressed in military time to standard time:
+			  the hours will be converted to standard time, PM/AM will be added;
+			- the validation of the data will be done: the rows with errors will be removed and saved at a special file;
+			- command line arguments (the input file, the output file,the errors file) will be passed by the user to run the code;
+			  count the rows at the initial data files, at the output file, at the errors file;
+			- count the rows at the initial data file/s, the output file, the errors file;
+			  count the rows with errors for each field			 
 			 	
 Specification: 1)dispatching_base_num: the values should be in the form 'B00123', the first character should be a letter and the following five
 				characters should be numbers;
@@ -68,8 +71,21 @@ print("The full name of the files: ")#show the full names of the files in the fo
 for f in data_files:
 	print(f)
 print('---------------------------------------------')
+#declare variables to count the rows:
+initial_rows=0
+output_rows=0
+errors_rows=0
+errors_baseID=0
+errors_licenceID=0
+errors_pickup=0
+errors_dropoff=0
+errors_PUlocation=0
+errors_DOlocation=0
+errors_flag=0
+total_errors=0
 
-num_loop=1
+num_loop=1 # this variable will be used to control the writing the column names to the output file, the errors file
+			#this should be written to the mentioned above files once
 
 for input_file in data_files:
 	with open(input_file,'rt') as file1: #open the initial file to read from it
@@ -78,39 +94,42 @@ for input_file in data_files:
      
 			with open(errors_file,'a+') as file3: #create a file for rows with errors, after reading each file, the errors will be appended
 				header=file1.readline() #read the first row containing the columns name
-        
+				format_time='%m/%d/%Y %H:%M'
+	
 				if num_loop==1: # the columns name should be written to the output and errors files only once 
 					file2.write(header) #write the columns name to the output file 
 					file3.write(header) #write  the columns names to the errors file
 				num_loop+=1
 		
 				for line in file1: #iterate over rows of the file
-					format_time = '%m/%d/%Y %H:%M' # the pickup and the dropoff time should be in this format
-					my_time='05/01/2000 15:07'
-					try:
-						datetime.datetime.strptime(my_time,format_time)
-					except:
-						print("it is a wrong format  for my_time")
+
 					line_list=line.split(',') #split the line/row into a list by the comma separators
-					
+					initial_rows+=1 #count the initial data rows
+
 					licenseID=line_list[0]
 					base=line_list[1] #the first item in the list, 
 					a=line_list[2] #pickup_time,the second item in the list
 					b=line_list[3] #drop-off time,the third element in the list
 					PUlocation=line_list[4] #locationID, the forth element in the list
-					DOlocation=line_list[5]
+					DOlocation=line_list[5] 
 					flag=line_list[6]
 					
 					
-					#validate the baseID,
-					 #if an error is present,skip the rest of the code in the loop and take another row to validate
+					'''validate the licenceID field,
+					if an error is present,move the row to the errors file and take another row to validate;
+					count the rows with this type of error unsing the variable errors_licenceID'''
 					if len(licenseID)!=6 or licenseID[0:2]!="HV" or str.isnumeric(licenseID[2:])=="False":
-						file3.write(line)
-						continue
+						file3.write(line) # move the row to the error file
+						errors_licenceID+=1  # count the number of rows with this error
+						errors_rows+=1 # total rows with errors 
+						continue #if an error is present,skip the rest of the code in the loop and take another row to validate
                
-					#validate the second element in the list, the base ID
+					'''validate the second element in the list, the baseID;
+					count the errors at his field: errors_licenceID variable '''
 					if len(base)!=6 or base[0]!= "B" or str.isnumeric(base[1:])=="False":
 						file3.write(line) # move the row to the error file
+						errors_baseID+=1 # count the errors at this field
+						errors_rows+=1
 						continue #if an error is present,skip the rest of the code in the loop and take another row to validate
 					
 
@@ -118,47 +137,68 @@ for input_file in data_files:
 						datetime.datetime.strptime(line_list[2], format_time)
 					except:
 						file3.write(line) # if the datetime format is incorrect, write the row to the errors file
+						errors_pickup+=1 # count the errors at this field
+						errors_rows+=1
 						continue
 					
-				
 					try: #validate the drop-off  date and time format
 						datetime.datetime.strptime(line_list[3],format_time) 
 					except:	
 						file3.write(line) #move the row to the error file
+						errors_dropoff+=1 #count the errors at the drop-off datatime field
+						errors_rows+=1
 						continue 
 						
  				# validate the pickup locationID	
 					if  not PUlocation.isnumeric() :
 						file3.write(line)
+						errors_PUlocation+=1 #count the rows with errors
+						errors_rows+=1
 						continue
 					elif PUlocation.strip()=='':
 						file3.write(line)
+						errors_PUlocation+=1
+						errors_rows+=1
 						continue
 					elif int(PUlocation)<=0:
 						file3.write(line)
+						errors_PUlocation+=1
+						errors_rows+=1
 						continue
 					elif int(PUlocation)>=1000:
 						file3.write(line)
+						errors_PUlocation+=1
+						errors_rows+=1
 						continue
 					
 					#validate the drop-off locationID
 					if not DOlocation.isnumeric(): 
 						file3.write(line)
+						errors_DOlocation+=1 #count the rows with errors at the drop-off location field
+						errors_rows+=1 # total rows with errors
 						continue
 					elif DOlocation.strip()=='':
 						file3.write(line)
+						errors_DOlocation+=1 # count rows with error at this field
+						errors_rows+=1 # total rows with errors
 						continue
 					elif int(DOlocation)<=0:
 						file3.write(line)
+						errors_DOlocation+=1
+						errors_rows+=1
 						continue
 					elif int(DOlocation)>=1000:
 						file3.write(line)
+						errors_DOlocation+=1
+						errors_rows+=1
 						continue
 						
 					#validate the next column 
 					if flag.strip()!='1':
 						if flag.strip()!='':
 							file3.write(line)
+							errors_flag+=1 #count the rows with errors at the flag field
+							errors_rows+=1
 							continue
 					
 				
@@ -207,6 +247,7 @@ for input_file in data_files:
 					line_list=delete_insert_time(line_list) # call the function
 					new_str=','.join(line_list)
 					file2.write(new_str) #write to the output_file
+					output_rows+=1
 
 print('The initial data (sample):')
 print()				
@@ -232,8 +273,17 @@ with open(errors_file,'rt') as file3: # read some rows from the file stored the 
 		text=file3.readline() #read the first ten rows
 		print(text, end='')
 print('------------------------------------------')
-
-
-
-
-
+print()
+print("Errors:")
+print(str(initial_rows)+ "  initial data rows")
+print(str(output_rows)+ "  at the output file")
+print(str(errors_rows)+ "  at the errors file")
+print()
+print(str(errors_licenceID)+ "   licenceID field")
+print(str(errors_baseID)+ "   baseID field")
+print(str(errors_pickup)+ "   pick-up date/time field")
+print(str(errors_dropoff)+ "   drop-off date/time field")
+print(str(errors_PUlocation)+ "   pick_up location field")
+print(str(errors_DOlocation)+ "   drop-off location filed")
+print(str(errors_flag)+ "   flag field")
+print()
