@@ -11,9 +11,8 @@ Description: the purpose of the program:
 			  the hours will be converted to standard time, PM/AM will be added;
 			- the validation of the data will be done: the rows with errors will be removed and saved at a special file;
 			- command line arguments (the input file, the output file,the errors file) will be passed by the user to run the code;
-			  count the rows at the initial data files, at the output file, at the errors file;
-			- count the rows at the initial data file/s, the output file, the errors file;
-			  count the rows with errors for each field			 
+			- count the rows at the initial data files, at the output file, at the errors file;
+			- count the rows with errors for each field			 
 			 	
 Specification: 1)dispatching_base_num: the values should be in the form 'B00123', the first character should be a letter and the following five
 				characters should be numbers;
