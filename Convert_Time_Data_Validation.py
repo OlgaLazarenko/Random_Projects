@@ -147,8 +147,30 @@ for input_file in data_files:
 						errors_dropoff+=1 #count the errors at the drop-off datatime field
 						errors_rows+=1
 						continue 
-						
- 				# validate the pickup locationID	
+
+
+					def validate_location(locationID):
+						if not locationID.isnumeric():
+							file3.write(line)
+							errors_PUlocation += 1
+							errors_rows += 1
+							continue	
+						elif int(locationID) <= 0:
+							file3.write(line)
+							errors_PUlocation += 1
+							errors_rows += 1
+							continue
+						elif int(locationID) >= 1000:
+							file3.write(line)
+							errors_PUlocation += 1
+							errors_rows += 1
+							continue
+
+					# call the function
+					validate_location(PUlocation)
+					validate_location(DOlocation)
+					'''		
+ 					# validate the pickup locationID	
 					if  not PUlocation.isnumeric() :
 						file3.write(line)
 						errors_PUlocation+=1 #count the rows with errors
@@ -169,7 +191,13 @@ for input_file in data_files:
 						errors_PUlocation+=1
 						errors_rows+=1
 						continue
+					'''
+
 					
+        				
+					
+
+					'''	
 					#validate the drop-off locationID
 					if not DOlocation.isnumeric(): 
 						file3.write(line)
@@ -191,14 +219,14 @@ for input_file in data_files:
 						errors_DOlocation+=1
 						errors_rows+=1
 						continue
+					'''
 						
 					#validate the next column 
-					if flag.strip()!='1':
-						if flag.strip()!='':
-							file3.write(line)
-							errors_flag+=1 #count the rows with errors at the flag field
-							errors_rows+=1
-							continue
+					if flag.strip() != '':
+						file3.write(line)
+						errors_flag+=1 #count the rows with errors at the flag field
+						errors_rows+=1
+						continue
 					
 				
 					hour_a=int(a[-5:-3])
