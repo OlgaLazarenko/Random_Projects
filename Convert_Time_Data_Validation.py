@@ -5,12 +5,12 @@
 Project Name: Read Text File, Change Military Time to Standard Time,
 			  Write to a New Text File and Validate the Data 
 Date: June 22, 2020
-author: Olga Lazarenko
+Author: Olga Lazarenko
 Description: the purpose of the program:
 			- read csv file and convert the columns with dates expressed in military time to standard time:
 			  the hours will be converted to standard time, PM/AM will be added;
 			- the validation of the data will be done: the rows with errors will be removed and saved at a special file;
-			- command line arguments (the input file, the output file,the errors file) will be passed by the user to run the code;
+			- Command Line Arguments (the input file, the output file,the errors file) will be passed by the user to run the code;
 			- count the rows at the initial data files, at the output file, at the errors file;
 			- count the rows with errors for each field			 
 			 	
@@ -99,6 +99,18 @@ for input_file in data_files:
 					file2.write(header) #write the columns name to the output file 
 					file3.write(header) #write  the columns names to the errors file
 				num_loop+=1
+
+				initial_rows=0
+				output_rows=0
+				errors_rows=0
+				errors_baseID=0
+				errors_licenceID=0
+				errors_pickup=0
+				errors_dropoff=0
+				errors_PUlocation=0
+				errors_DOlocation=0
+				errors_flag=0
+				total_errors=0
 		
 				for line in file1: #iterate over rows of the file
 
@@ -142,29 +154,30 @@ for input_file in data_files:
 					
 					try: #validate the drop-off  date and time format
 						datetime.datetime.strptime(line_list[3],format_time) 
+
 					except:	
 						file3.write(line) #move the row to the error file
 						errors_dropoff+=1 #count the errors at the drop-off datatime field
 						errors_rows+=1
 						continue 
 
-
 					def validate_location(locationID):
 						if not locationID.isnumeric():
 							file3.write(line)
 							errors_PUlocation += 1
 							errors_rows += 1
-							continue	
+							
+								
 						elif int(locationID) <= 0:
 							file3.write(line)
 							errors_PUlocation += 1
 							errors_rows += 1
-							continue
+							
 						elif int(locationID) >= 1000:
 							file3.write(line)
 							errors_PUlocation += 1
 							errors_rows += 1
-							continue
+							
 
 					# call the function
 					validate_location(PUlocation)
