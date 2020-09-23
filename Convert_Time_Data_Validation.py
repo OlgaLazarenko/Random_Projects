@@ -100,17 +100,6 @@ for input_file in data_files:
 					file3.write(header) #write  the columns names to the errors file
 				num_loop+=1
 
-				initial_rows=0
-				output_rows=0
-				errors_rows=0
-				errors_baseID=0
-				errors_licenceID=0
-				errors_pickup=0
-				errors_dropoff=0
-				errors_PUlocation=0
-				errors_DOlocation=0
-				errors_flag=0
-				total_errors=0
 		
 				for line in file1: #iterate over rows of the file
 
@@ -160,79 +149,21 @@ for input_file in data_files:
 						errors_dropoff+=1 #count the errors at the drop-off datatime field
 						errors_rows+=1
 						continue 
-
+					# create the function validate_location(locationID) to validate the PUlocation/ DOlocation
 					def validate_location(locationID):
 						if not locationID.isnumeric():
 							file3.write(line)
-							errors_PUlocation += 1
-							errors_rows += 1
-							
-								
 						elif int(locationID) <= 0:
 							file3.write(line)
-							errors_PUlocation += 1
-							errors_rows += 1
-							
 						elif int(locationID) >= 1000:
 							file3.write(line)
-							errors_PUlocation += 1
-							errors_rows += 1
+							
 							
 
-					# call the function
+					# call the function to validate pick-up/ drop-off location
 					validate_location(PUlocation)
 					validate_location(DOlocation)
-					'''		
- 					# validate the pickup locationID	
-					if  not PUlocation.isnumeric() :
-						file3.write(line)
-						errors_PUlocation+=1 #count the rows with errors
-						errors_rows+=1
-						continue
-					elif PUlocation.strip()=='':
-						file3.write(line)
-						errors_PUlocation+=1
-						errors_rows+=1
-						continue
-					elif int(PUlocation)<=0:
-						file3.write(line)
-						errors_PUlocation+=1
-						errors_rows+=1
-						continue
-					elif int(PUlocation)>=1000:
-						file3.write(line)
-						errors_PUlocation+=1
-						errors_rows+=1
-						continue
-					'''
-
 					
-        				
-					
-
-					'''	
-					#validate the drop-off locationID
-					if not DOlocation.isnumeric(): 
-						file3.write(line)
-						errors_DOlocation+=1 #count the rows with errors at the drop-off location field
-						errors_rows+=1 # total rows with errors
-						continue
-					elif DOlocation.strip()=='':
-						file3.write(line)
-						errors_DOlocation+=1 # count rows with error at this field
-						errors_rows+=1 # total rows with errors
-						continue
-					elif int(DOlocation)<=0:
-						file3.write(line)
-						errors_DOlocation+=1
-						errors_rows+=1
-						continue
-					elif int(DOlocation)>=1000:
-						file3.write(line)
-						errors_DOlocation+=1
-						errors_rows+=1
-						continue
-					'''
 						
 					#validate the next column 
 					if flag.strip() != '':
@@ -314,11 +245,12 @@ with open(errors_file,'rt') as file3: # read some rows from the file stored the 
 		print(text, end='')
 print('------------------------------------------')
 print()
-print("Errors:")
+
 print(str(initial_rows)+ "  initial data rows")
-print(str(output_rows)+ "  at the output file")
-print(str(errors_rows)+ "  at the errors file")
+print(str(output_rows)+ "  rows at the output file")
+print(str(errors_rows)+ "  rows at the errors file")
 print()
+print("Errors: ")
 print(str(errors_licenceID)+ "   licenceID field")
 print(str(errors_baseID)+ "   baseID field")
 print(str(errors_pickup)+ "   pick-up date/time field")
